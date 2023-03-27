@@ -23,7 +23,7 @@ public class JoinController {
         status.put("status", "success");
         new JSONObject(status);
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-OriginAccess-Control-Allow-Origin", "*");
 
         return status;
     }
