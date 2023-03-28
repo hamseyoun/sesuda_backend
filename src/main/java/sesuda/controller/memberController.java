@@ -1,5 +1,6 @@
 package sesuda.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +18,10 @@ public class memberController {
     MemberService memberService;
 
     @GetMapping("/memberList")
-    public List<MemberDTO> memberlist() {
+    public List<MemberDTO> memberlist(HttpServletResponse response) {
 
+
+        response.setHeader("Access-Control-Allow-OriginAccess-Control-Allow-Origin", "*");
         List<MemberDTO> dto = new ArrayList<>();
         dto = memberService.memberList();
 
