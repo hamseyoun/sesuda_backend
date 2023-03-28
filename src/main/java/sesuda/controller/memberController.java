@@ -22,7 +22,7 @@ public class memberController {
         List<MemberDTO> dto = new ArrayList<>();
         dto = memberService.memberList();
 
-        System.out.println("dto.get(0).getUserDisplayName() = " + dto.get(0).getUserDisplayName());
+        System.out.println("dto.get(0).getId() = " + dto.get(0).getId());
         
         return dto;
     }
