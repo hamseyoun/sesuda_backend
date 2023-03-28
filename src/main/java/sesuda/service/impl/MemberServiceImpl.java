@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import sesuda.dao.MemberDao;
 import sesuda.dto.MemberDTO;
 import sesuda.service.MemberService;
+import sesuda.util.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,35 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private MemberDao dao;
+
+    // 멤버리스트
     @Override
     public List<MemberDTO> memberList() {
 
         return new ArrayList<>(dao.memberList());
 
+    }
+    // 회원가입
+    @Override
+    public String memberInsert(MemberDTO memberDTO) {
+
+        int daoResult;
+        String result;
+
+        try{
+            daoResult = dao.memberInsert(memberDTO);
+            if(daoResult >= 1){
+                result =  "회원가입 성공";
+            }
+            else {
+                result = "회원가입 실패";
+            }
+        }
+        catch(Exception e){
+            e.getStackTrace();
+            result = "DB오류";
+        }
+
+        return result;
     }
 }

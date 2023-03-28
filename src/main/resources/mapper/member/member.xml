@@ -6,5 +6,13 @@
         select * from member
     </select>
 
+    <insert id="memberInsert" parameterType="sesuda.dto.MemberDTO">
+        insert into member values(
+        nextval('member_seq'),
+        #{id},#{pw},#{nickname},'user',now()
+        )
+    </insert>
+
+
 
 </mapper>

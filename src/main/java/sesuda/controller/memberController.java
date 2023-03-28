@@ -39,6 +39,24 @@ public class memberController {
 
     }
 
+    @PostMapping(value = "/memberJoin")
+    public ResponseEntity memberJoin(HttpServletResponse response,@RequestBody MemberDTO memberDTO){
+        Message message = new Message();
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        System.out.println("memberDTO.getId() = " + memberDTO.getId());
+        System.out.println("memberDTO.getNickname() = " + memberDTO.getNickname());
+        System.out.println("memberDTO.getPw() = " + memberDTO.getPw());
+
+
+        String result =memberService.memberInsert(memberDTO);
+
+        message.setMessage(result);
+        return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
+
+    }
+
     @GetMapping(value = "/membertest1")
     public ResponseEntity<Message> findById() {
         Message message = new Message();
@@ -51,7 +69,7 @@ public class memberController {
         message.setMessage("굿나잇");
         message.setData(dto);
 
-        return new ResponseEntity<>(message, headers, HttpStatus.OK);
+        return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
     }
 
 

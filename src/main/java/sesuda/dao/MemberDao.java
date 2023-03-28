@@ -10,5 +10,6 @@ import java.util.List;
 @Mapper
 public interface MemberDao {
     List<MemberDTO> memberList();
+    int memberInsert(MemberDTO memberDTO);
 
 }
