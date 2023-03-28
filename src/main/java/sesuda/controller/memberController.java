@@ -37,6 +37,8 @@ public class memberController {
         //JSONObject dtoo = new JSONObject(dto);
 
         System.out.println("dto.get(0).getId() = " + dto.get(0).getId());
+
+        System.out.println("ResponseEntity.ok(dto).getClass() = " + ResponseEntity.ok(dto).getClass());
         return ResponseEntity.ok(dto);
 
         //String jsonMap = dtoo.toString();
