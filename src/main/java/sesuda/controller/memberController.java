@@ -29,26 +29,14 @@ public class memberController {
     @GetMapping("/memberList")
     public ResponseEntity memberlist(HttpServletResponse response) {
 
-
-//        Map<String, String> status = new HashMap<>();
-//        status.put("status", "success");
-//        new JSONObject(status);
-
-
         List<MemberDTO> dto = new ArrayList<>();
         dto = memberService.memberList();
-
-
-        //JSONObject dtoo = new JSONObject(dto);
 
         System.out.println("dto.get(0).getId() = " + dto.get(0).getId());
 
         System.out.println("ResponseEntity.ok(dto).getClass() = " + ResponseEntity.ok(dto).getClass());
         return ResponseEntity.ok(dto);
 
-        //String jsonMap = dtoo.toString();
-
-        //return dtoo;
     }
 
     @GetMapping(value = "/membertest1")
@@ -57,11 +45,10 @@ public class memberController {
         HttpHeaders headers= new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
-
         List<MemberDTO> dto = new ArrayList<>();
         dto = memberService.memberList();
 
-        message.setMessage("성공 코드");
+        message.setMessage("굿나잇");
         message.setData(dto);
 
         return new ResponseEntity<>(message, headers, HttpStatus.OK);
