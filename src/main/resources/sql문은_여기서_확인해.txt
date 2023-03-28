@@ -1,0 +1,61 @@
+-- 멤버 테이블 생성
+create table Member (
+	nid INTEGER PRIMARY KEY,
+	id VARCHAR(100),
+	pw VARCHAR(200),
+	nickname VARCHAR(200),
+	auth VARCHAR(100),
+	joindate TIMESTAMP
+	);
+
+-- 멤버 시퀀스 생성
+create sequence member_seq;
+
+-- 멤버 예시 insert 문
+insert into member (
+	nid
+	,id
+	,pw
+	,nickname
+	,auth
+	,joindate
+)
+values (
+	nextval('member_seq')
+	,'sumin'
+	,'1234'
+	,'sumin'
+	,'user'
+	,now()
+);
+
+-- 메뉴 테이블 생성
+create table menu (
+	menu_uid integer primary key
+	,menu_name varchar(200)
+	,menu_info varchar(200)
+	,menu_price integer
+	,menu_picture varchar(1000)
+	,menu_upload_date timestamp
+);
+
+-- 메뉴 시퀀스 생성
+create sequence menu_seq;
+
+-- 메뉴 예시 insert문
+insert into menu (
+	menu_uid
+	,menu_name
+	,menu_info
+	,menu_price
+	,menu_picture
+	,menu_upload_date
+)
+values (
+	nextval('menu_seq')
+	,'아이스 아메리카노'
+	,'맛있는 아이스 아메리카노입니다~'
+	,4000
+	,'/img/ice_americano.jpg'
+	,now()
+);
