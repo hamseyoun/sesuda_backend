@@ -59,3 +59,19 @@ values (
 	,'/img/ice_americano.jpg'
 	,now()
 );
+
+-- 주문 테이블 생성
+create table orders (
+	order_Uid integer primary key
+	,menu_Uid integer
+	,add_Shot integer
+ 	,add_Milk integer
+  	,add_Syrup integer
+  	,select_Bean integer
+	,count integer
+	,order_Date timestamp
+	,FOREIGN KEY(menu_Uid) REFERENCES menu(menu_uid)
+);
+
+-- 주문 시퀀스 생성
+create sequence order_seq;
