@@ -21,7 +21,7 @@ public class memberController {
     public JSONObject json;
 
     @GetMapping("/memberList")
-    public String memberlist(HttpServletResponse response) {
+    public JSONObject memberlist(HttpServletResponse response) {
 
 
 //        Map<String, String> status = new HashMap<>();
@@ -32,13 +32,13 @@ public class memberController {
         List<MemberDTO> dto = new ArrayList<>();
         dto = memberService.memberList();
 
-        Object dtoo = new JSONObject(dto);
+        JSONObject dtoo = new JSONObject(dto);
 
         System.out.println("dto.get(0).getId() = " + dto.get(0).getId());
 
-        String jsonMap = dtoo.toString();
+        //String jsonMap = dtoo.toString();
 
-        return jsonMap;
+        return dtoo;
     }
 
 
