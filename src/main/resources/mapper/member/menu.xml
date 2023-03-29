@@ -6,4 +6,45 @@
         select * from menu;
     </select>
 
+    <insert id="order" parameterType="sesuda.dto.MenuDTO">
+        insert into orders (
+            order_uid
+            ,member_uid
+            ,menu_uid
+            ,add_shot
+            ,add_milk
+            ,add_syrup
+            ,select_bean
+            ,count
+            ,order_date
+            ,order_state
+        )
+        values (
+            nextval('order_seq')
+            ,#{memberUid}
+            ,#{menuUid}
+            ,#{addShot}
+            ,#{addMilk}
+            ,#{addSyrup}
+            ,#{selectBean}
+            ,#{count}
+            ,now()
+            ,1
+        );
+    </insert>
+
+    <select id="orderList" resultType="sesuda.dto.MenuDTO">
+        select
+            o.order_uid
+             ,m.menu_name
+             ,o.add_shot
+             ,o.add_milk
+             ,o.add_syrup
+             ,o.select_bean
+             ,o.count
+             ,o.order_date
+        from menu m, orders o
+        where m.menu_uid = o.menu_uid;
+    </select>
+
 </mapper>

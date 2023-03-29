@@ -9,4 +9,7 @@ public interface MenuService {
 
     //메뉴리스트 가져오기
     public List<MenuDTO> menuList();
+
+    //주문 넣기
+    public String order(MenuDTO dto);
 }

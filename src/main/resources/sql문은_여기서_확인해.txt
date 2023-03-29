@@ -1,6 +1,6 @@
 -- 멤버 테이블 생성
 create table Member (
-	nid INTEGER PRIMARY KEY,
+	member_Uid INTEGER PRIMARY KEY,
 	id VARCHAR(100),
 	pw VARCHAR(200),
 	nickname VARCHAR(200),
@@ -63,6 +63,7 @@ values (
 -- 주문 테이블 생성
 create table orders (
 	order_Uid integer primary key
+	,member_Uid integer
 	,menu_Uid integer
 	,add_Shot integer
  	,add_Milk integer
@@ -70,8 +71,24 @@ create table orders (
   	,select_Bean integer
 	,count integer
 	,order_Date timestamp
+	,order_state
 	,FOREIGN KEY(menu_Uid) REFERENCES menu(menu_uid)
-);
+	);
 
 -- 주문 시퀀스 생성
 create sequence order_seq;
+
+-- 주문 예시 insert문
+insert into orders
+values (
+	nextval('order_seq')
+	,1
+	,1
+	,1
+	,1
+	,1
+	,1
+	,1
+	,1
+	,now()
+);

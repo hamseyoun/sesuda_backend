@@ -19,4 +19,18 @@ public class MenuServiceImpl implements MenuService {
     public List<MenuDTO> menuList() {
         return new ArrayList<>(dao.menuList());
     }
+
+    @Override
+    public String order(MenuDTO dto) {
+        String result = "";
+
+        try {
+            dao.order(dto);
+            result = "order success!";
+        } catch (Exception e) {
+            result = "order fail!";
+        }
+
+        return result;
+    }
 }

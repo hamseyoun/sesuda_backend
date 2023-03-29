@@ -8,6 +8,8 @@ import java.util.List;
 @Mapper
 public interface MenuDao {
 
-    List<MenuDTO> menuList();
+    public List<MenuDTO> menuList();
+
+    public void order(MenuDTO dto);
 
 }
