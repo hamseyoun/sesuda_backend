@@ -49,8 +49,24 @@ public class memberController {
         System.out.println("memberDTO.getNickname() = " + memberDTO.getNickname());
         System.out.println("memberDTO.getPw() = " + memberDTO.getPw());
 
-
         String result =memberService.memberInsert(memberDTO);
+
+        message.setMessage(result);
+        return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
+
+    }
+    // id 중복여부체크
+    @PostMapping(value = "/memberSameCheck")
+    public ResponseEntity memberSameCheck(HttpServletResponse response,@RequestBody String id){
+
+        JSONObject jsonObject = new JSONObject(id);
+        Object obj = jsonObject.get("id");
+        id = obj.toString();
+
+        Message message = new Message();
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        String result =memberService.memberSameCheck(id);
 
         message.setMessage(result);
         return new ResponseEntity<Message>(message, headers, HttpStatus.OK);

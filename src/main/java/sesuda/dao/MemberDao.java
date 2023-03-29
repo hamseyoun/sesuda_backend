@@ -12,4 +12,5 @@ public interface MemberDao {
     List<MemberDTO> memberList();
     int memberInsert(MemberDTO memberDTO);
 
+    int memberSameCheck(String id);
 }

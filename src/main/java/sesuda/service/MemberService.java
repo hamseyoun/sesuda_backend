@@ -12,4 +12,6 @@ public interface MemberService {
 
     // 회원 가입
     public String memberInsert(MemberDTO memberDTO);
+    // 아이디 중복 체크
+    public String memberSameCheck(String id);
 }

@@ -47,4 +47,27 @@ public class MemberServiceImpl implements MemberService {
 
         return result;
     }
+
+    // 아이디 중복 체크
+    @Override
+    public String memberSameCheck(String id) {
+        String result;
+        int daoResult;
+
+        try{
+            daoResult =dao.memberSameCheck(id);
+            System.out.println("daoResult = " + daoResult);
+            if(daoResult>=1) {
+                result = "중복입니다";
+            }
+            else{
+                result = "중복아닙니다";
+            }
+        }
+        catch (Exception e) {
+            e.getStackTrace();
+            result = "DB오류";
+        }
+        return result;
+    }
 }
