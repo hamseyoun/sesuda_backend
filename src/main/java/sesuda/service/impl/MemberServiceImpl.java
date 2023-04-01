@@ -55,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
         int daoResult;
 
         try{
-            daoResult =dao.memberSameCheck(id);
+            daoResult =dao.memberIdCheck(id);
             System.out.println("daoResult = " + daoResult);
             if(daoResult>=1) {
                 result = "중복입니다";
@@ -72,6 +72,45 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
+    // 로그인시 아이디 있는지 체크
+    @Override
+    public String memberIdCheck(String id) {
+        String result;
+        int daoResult;
 
+        try{
+            daoResult =dao.memberIdCheck(id);
+            System.out.println("daoResult = " + daoResult);
+            if(daoResult>=1) {
+                result = "success";
+            }
+            else{
+                result = "fail";
+            }
+        }
+        catch (Exception e) {
+            e.getStackTrace();
+            result = "DB오류";
+        }
+        return result;
+    }
+    // 로그인
+    @Override
+    public MemberDTO memberLogin(MemberDTO memberDTO) {
+        String result;
+
+        try{
+            memberDTO=dao.memberLogin(memberDTO);
+            System.out.println("memberDTO.getId() = " + memberDTO.getId());
+            System.out.println("memberDTO.getNickName() = " + memberDTO.getNickName());
+            System.out.println("memberDTO = " + memberDTO.getPw());
+
+        }
+        catch (Exception e) {
+            e.getStackTrace();
+            result = "DB오류";
+        }
+        return memberDTO;
+    }
 
 }

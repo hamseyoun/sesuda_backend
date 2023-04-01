@@ -6,18 +6,24 @@
         select * from member
     </select>
 
+    <!--회원가입 -->
     <insert id="memberInsert" parameterType="sesuda.dto.MemberDTO">
         insert into member values(
         nextval('member_seq'),
-        #{id},#{pw},#{nickname},'user',now()
+        #{id},#{pw},#{nickName},'user',now()
         )
     </insert>
-
-    <select id="memberSameCheck" resultType="int" parameterType="String">
+    <!--아이디 중복 체크용도,로그인시 아이디 있는지 유무판단-->
+    <select id="memberIdCheck" resultType="int" parameterType="String">
         select count(*) from member
         where id = #{id}
     </select>
 
+    <!--로그인-->
+    <select id="memberLogin" resultType="sesuda.dto.MemberDTO" parameterType="sesuda.dto.MemberDTO">
+        select * from member
+        where id = #{id}
+    </select>
 
 
 

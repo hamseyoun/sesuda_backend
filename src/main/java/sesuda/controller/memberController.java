@@ -1,6 +1,8 @@
 package sesuda.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -8,11 +10,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import sesuda.dto.AdminDTO;
 import sesuda.dto.MemberDTO;
 import sesuda.service.MemberService;
 import sesuda.util.Message;
 
+import javax.validation.Valid;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +28,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/member")
 public class memberController {
+
+
+    private static final Logger LOGGER = LogManager.getLogger(memberController.class);
+
+
     @Autowired
     MemberService memberService;
 
@@ -30,9 +41,12 @@ public class memberController {
 
     public JSONObject json;
 
+
+
     @GetMapping("/memberList")
     public ResponseEntity memberlist(HttpServletResponse response) {
-
+        Message message = new Message();
+        HttpHeaders headers= new HttpHeaders();
         List<MemberDTO> dto = new ArrayList<>();
         dto = memberService.memberList();
 
@@ -50,7 +64,7 @@ public class memberController {
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
         System.out.println("memberDTO.getId() = " + memberDTO.getId());
-        System.out.println("memberDTO.getNickname() = " + memberDTO.getNickname());
+        System.out.println("memberDTO.getNickname() = " + memberDTO.getNickName());
         System.out.println("memberDTO.getPw() = " + memberDTO.getPw());
         //암호화
         memberDTO.setPw(passwordEncoder.encode(memberDTO.getPw()));
@@ -65,13 +79,14 @@ public class memberController {
     // id 중복여부체크
     @PostMapping(value = "/memberSameCheck")
     public ResponseEntity memberSameCheck(HttpServletResponse response,@RequestBody String id){
+        Message message = new Message();
+        HttpHeaders headers= new HttpHeaders();
 
         JSONObject jsonObject = new JSONObject(id);
         Object obj = jsonObject.get("id");
         id = obj.toString();
 
-        Message message = new Message();
-        HttpHeaders headers= new HttpHeaders();
+
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
         String result =memberService.memberSameCheck(id);
 
@@ -79,26 +94,43 @@ public class memberController {
         return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
 
     }
+
     // 로그인
-//    @PostMapping(value = "/memberLogin")
-//    public ResponseEntity` memberLogin(HttpServletResponse response,@RequestBody MemberDTO memberDTO){
-//
-//
-//        Message message = new Message();
-//        HttpHeaders headers= new HttpHeaders();
-//        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-//        if(memberDTO.getId()==null || memberDTO.getPw()==null) {
-//
-//        }
-//
-//        message.setMessage(result);
-//        return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
-//
-//    }
+    @PostMapping(value = "/memberLogin")
+    public ResponseEntity memberLogin(HttpServletResponse response,@RequestBody MemberDTO memberDTO){
+        Message message = new Message();
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        String idCheck = memberService.memberIdCheck(memberDTO.getId());
+        String result="d";
+        //아이디가 존재하는지 파악
+        if(idCheck.equals("success")) {
+            LOGGER.info("ID는있음");
 
+            // 암호화 비교용
+            MemberDTO resultDTO = memberService.memberLogin(memberDTO);
+            String encodePw = resultDTO.getPw();
+            // 아이디,패스워드 일치시
+            if(passwordEncoder.matches(memberDTO.getPw(),encodePw))  {
+                LOGGER.info("패스워드까지 일치");
+                // 로그인 상태 유지키
+                resultDTO.setState(2);
+                // 비밀번호 다시 null
+                resultDTO.setPw("null");
+                message.setData(resultDTO);
+            }
+            else{
+                LOGGER.info("패스워드불일치");
+                result = "패스워드 불일치";
+            }
 
+        }else if(idCheck.equals("fail")){
+            result = "아이디가없습니다";
+        }
+        message.setMessage(result);
+        return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
 
-
+    }
 
 
     @GetMapping(value = "/membertest1")

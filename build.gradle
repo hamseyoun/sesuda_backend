@@ -12,6 +12,10 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+
 }
 
 repositories {
@@ -32,12 +36,19 @@ dependencies {
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 	// https://mvnrepository.com/artifact/javax.validation/validation-api
 	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+	// 시큐리티
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// 로그
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	// 쿼리로그 추가
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 
-		implementation 'org.springframework.boot:spring-boot-starter-security'
+
 
 
 
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()
