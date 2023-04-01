@@ -71,7 +71,7 @@ create table orders (
   	,select_Bean integer
 	,count integer
 	,order_Date timestamp
-	,order_state
+	,order_state integer
 	,FOREIGN KEY(menu_Uid) REFERENCES menu(menu_uid)
 	);
 
@@ -89,6 +89,6 @@ values (
 	,1
 	,1
 	,1
-	,1
 	,now()
+	,1
 );

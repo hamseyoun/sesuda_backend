@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import sesuda.dto.MemberDTO;
 import sesuda.service.MemberService;
@@ -23,6 +24,9 @@ import java.util.Map;
 public class memberController {
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public JSONObject json;
 
@@ -48,9 +52,12 @@ public class memberController {
         System.out.println("memberDTO.getId() = " + memberDTO.getId());
         System.out.println("memberDTO.getNickname() = " + memberDTO.getNickname());
         System.out.println("memberDTO.getPw() = " + memberDTO.getPw());
-
+        //암호화
+        memberDTO.setPw(passwordEncoder.encode(memberDTO.getPw()));
+        System.out.println("memberDTO = " + memberDTO.getPw());
         String result =memberService.memberInsert(memberDTO);
 
+        System.out.println("memberDTO = " + memberDTO.getPw());
         message.setMessage(result);
         return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
 
@@ -72,6 +79,27 @@ public class memberController {
         return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
 
     }
+    // 로그인
+//    @PostMapping(value = "/memberLogin")
+//    public ResponseEntity` memberLogin(HttpServletResponse response,@RequestBody MemberDTO memberDTO){
+//
+//
+//        Message message = new Message();
+//        HttpHeaders headers= new HttpHeaders();
+//        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+//        if(memberDTO.getId()==null || memberDTO.getPw()==null) {
+//
+//        }
+//
+//        message.setMessage(result);
+//        return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
+//
+//    }
+
+
+
+
+
 
     @GetMapping(value = "/membertest1")
     public ResponseEntity<Message> findById() {

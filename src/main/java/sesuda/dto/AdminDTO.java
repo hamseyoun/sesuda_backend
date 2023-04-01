@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 @Data
 public class AdminDTO {
 
+    @Min(value = 2 ,message = "떙")
     private int memberUid;
 
-    @Min(value=2, message = "유저 권한입니다")
-    @NotNull
-    private Integer auth;
+    @NotNull(message = "떙")
+    private int auth;
 }
