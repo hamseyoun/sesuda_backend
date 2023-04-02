@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sesuda.dao.AdminDao">
+
+
+    <!--관리자에서 주문 받은 리스트 조회-->
+    <select id="orderList" resultType="sesuda.dto.AdminDTO">
+        select
+        o.order_uid
+        ,m.menu_name
+        ,o.add_shot
+        ,o.add_milk
+        ,o.add_syrup
+        ,o.select_bean
+        ,o.count
+        ,o.order_date
+        ,o.order_state
+        from menu m, orders o
+        where m.menu_uid = o.menu_uid;
+
+    </select>
+
+    <!--주문수락 상태 -->
+    <update id="orderAccept" parameterType="sesuda.dto.AdminDTO" >
+        update orders
+        set order_state = 2
+        where order_uid = #{orderUid}
+    </update>
+
+    <!-- 주문완료상태-->
+    <update id="orderFinish" parameterType="sesuda.dto.AdminDTO" >
+        update orders
+        set order_sate = 3
+        where order_uid = #{orderUid}
+    </update>
+
+    <!-- 주문취소 -->
+    <update id="orderCancel" parameterType="sesuda.dto.AdminDTO" >
+        update orders
+        set order_sate = 4
+        where order_uid = #{orderUid}
+    </update>
+
+</mapper>

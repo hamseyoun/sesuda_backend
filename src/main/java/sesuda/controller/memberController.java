@@ -105,27 +105,28 @@ public class memberController {
         String result="d";
         //아이디가 존재하는지 파악
         if(idCheck.equals("success")) {
-            LOGGER.info("ID는있음");
+            LOGGER.info("login_equal");
 
             // 암호화 비교용
             MemberDTO resultDTO = memberService.memberLogin(memberDTO);
             String encodePw = resultDTO.getPw();
             // 아이디,패스워드 일치시
             if(passwordEncoder.matches(memberDTO.getPw(),encodePw))  {
-                LOGGER.info("패스워드까지 일치");
+                LOGGER.info("login success");
                 // 로그인 상태 유지키
                 resultDTO.setState(2);
                 // 비밀번호 다시 null
                 resultDTO.setPw("null");
                 message.setData(resultDTO);
+                result = "login success";
             }
             else{
                 LOGGER.info("패스워드불일치");
-                result = "패스워드 불일치";
+                result = "password-fail";
             }
 
         }else if(idCheck.equals("fail")){
-            result = "아이디가없습니다";
+            result = "not-found-user";
         }
         message.setMessage(result);
         return new ResponseEntity<Message>(message, headers, HttpStatus.OK);

@@ -1,29 +1,90 @@
 package sesuda.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import sesuda.dto.AdminDTO;
+import sesuda.dto.MenuDTO;
+import sesuda.service.AdminService;
 import sesuda.util.Message;
 import javax.validation.Valid;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
+
+@RequestMapping("/admin")
 @RestController
 public class AdminController {
 
-    @GetMapping(value = "/admin")
-    public String admin(@Valid AdminDTO dto, BindingResult bindingResult) {
+    @Autowired
+    AdminService adminService;
 
-        String result = "";
-
-        if (bindingResult.hasErrors()) {
-            result = "not admin!";
-        } else{
-            result = "hello admin!";
+    @PostMapping(value = "/orderList")
+    public ResponseEntity<Message> admin(@RequestBody AdminDTO dto) {
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        String result ="";
+        List<AdminDTO> dtos = new ArrayList<>();
+        if(dto.getAuth().equals("admin")) {
+            dtos = adminService.orderList();
+            result ="Welcome Admin";
         }
-        System.out.println("dto.getAuth() = " + dto.getAuth());
-        System.out.println("bindingResult = " + bindingResult);
-        System.out.println("dto = " + dto.getAuth());
+        else{
+            result = "not admin";
+        }
 
-        return result;
+        message.setMessage(result);
+        message.setData(dtos);
+
+        return new ResponseEntity<>(message, headers, HttpStatusCode.valueOf(200));
+
+    }
+    //주문 수락 상태
+    @PostMapping(value="/orderAccept")
+    public ResponseEntity<Message> orderAccept(@RequestBody AdminDTO dto) {
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        String result ="";
+
+        result = adminService.orderAccept(dto);
+
+        message.setMessage(result);
+        return new ResponseEntity<>(message, headers, HttpStatusCode.valueOf(200));
+
+    }
+
+    //주문 수락 상태
+    @PostMapping(value="/orderFinish")
+    public ResponseEntity<Message> orderFinish(@RequestBody AdminDTO dto) {
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        String result ="";
+        result = adminService.orderFinish(dto);
+
+        message.setMessage(result);
+        return new ResponseEntity<>(message, headers, HttpStatusCode.valueOf(200));
+
+    }
+
+    //주문 수락 상태
+    @PostMapping(value="/orderCancel")
+    public ResponseEntity<Message> orderCancel(@RequestBody AdminDTO dto) {
+        Message message = new Message();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        String result ="";
+        result = adminService.orderCancel(dto);
+
+        message.setMessage(result);
+        return new ResponseEntity<>(message, headers, HttpStatusCode.valueOf(200));
+
     }
 }
