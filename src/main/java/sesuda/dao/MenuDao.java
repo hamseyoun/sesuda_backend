@@ -12,4 +12,5 @@ public interface MenuDao {
 
     public void order(MenuDTO dto);
 
+    public int sequence();
 }

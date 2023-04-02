@@ -33,6 +33,9 @@
         );
     </insert>
 
+    <select id="sequence" resultType="int">
+        select max(order_uid) from orders
+    </select>
 
 
 </mapper>

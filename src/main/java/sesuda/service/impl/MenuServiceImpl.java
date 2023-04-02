@@ -33,4 +33,10 @@ public class MenuServiceImpl implements MenuService {
 
         return result;
     }
+
+    @Override
+    public int sequence() {
+        int result = dao.sequence();
+        return result;
+    }
 }

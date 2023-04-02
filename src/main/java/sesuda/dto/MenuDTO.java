@@ -15,7 +15,7 @@ public class MenuDTO {
     private Timestamp menuUploadDate;
 
     // 주문자
-    private int memberUid;
+    private String memberUid;
 
     // 옵션
     private int orderUid;

@@ -113,8 +113,7 @@ public class memberController {
             // 아이디,패스워드 일치시
             if(passwordEncoder.matches(memberDTO.getPw(),encodePw))  {
                 LOGGER.info("login success");
-                // 로그인 상태 유지키
-                resultDTO.setState(2);
+
                 // 비밀번호 다시 null
                 resultDTO.setPw("null");
                 message.setData(resultDTO);

@@ -14,7 +14,7 @@ public class MemberDTO {
     private Timestamp joinDate;
     private String auth;
 
-    // 로그인상태인지 1이면 비로그인,2이면 로그인
-    private int state = 1;
+    // 세션키
+    private String sessionKey;
 
 }
