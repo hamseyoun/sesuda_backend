@@ -3,9 +3,9 @@ create table Member (
 	member_Uid INTEGER PRIMARY KEY,
 	id VARCHAR(100),
 	pw VARCHAR(200),
-	nickname VARCHAR(200),
+	nick_name VARCHAR(200),
 	auth VARCHAR(100),
-	joindate TIMESTAMP,
+	join_date TIMESTAMP,
 	session_key varchar(200)
 	);
 
@@ -19,7 +19,7 @@ insert into member (
 	,pw
 	,nick_name
 	,auth
-	,joindate
+	,join_date
 )
 values (
 	nextval('member_seq')
