@@ -17,7 +17,7 @@ insert into member (
 	member_uid
 	,id
 	,pw
-	,nickname
+	,nick_name
 	,auth
 	,joindate
 )
