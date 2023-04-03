@@ -40,4 +40,10 @@
         where order_uid = #{orderUid}
     </update>
 
+    <!--관리자인지 체크용도-->
+    <select id="adminChecK" resultType="sesuda.dto.MemberDTO" parameterType="int">
+        select * from member
+        where member_uid = #{memberUid}
+    </select>
+
 </mapper>

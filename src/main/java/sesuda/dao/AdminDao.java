@@ -3,6 +3,7 @@ package sesuda.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import sesuda.dto.AdminDTO;
+import sesuda.dto.MemberDTO;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface AdminDao {
 
     // 주문삭제
     public int orderDelete(AdminDTO adminDTO);
+    // 관리자 체크용도
+    public MemberDTO adminChecK(int memberUid);
 }

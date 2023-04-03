@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sesuda.dao.AdminDao;
 import sesuda.dto.AdminDTO;
+import sesuda.dto.MemberDTO;
 import sesuda.service.AdminService;
 
 import java.util.ArrayList;
@@ -42,16 +43,16 @@ public class AdminServiceImpl implements AdminService {
         return  result;
     }
 
-    // 주문 완료 상태
+    // 조리 완료 상태
     @Override
     public String orderFinish(AdminDTO adminDTO) {
         String result;
         try{
             int intResult = adminDao.orderAccept(adminDTO);
             if(intResult==0) {
-                result = "주문완료 실패";
+                result = "조리완료 실패";
             }else {
-                result="주문완료";
+                result="조리완료";
             }
         }
         catch (Exception e) {
@@ -78,5 +79,13 @@ public class AdminServiceImpl implements AdminService {
             result = "DB오류";
         }
         return  result;
+    }
+
+
+    //관리자 체크용도
+    @Override
+    public MemberDTO adminCheck(int memberUid) {
+        MemberDTO memberDTO = adminDao.adminChecK(memberUid);
+        return memberDTO;
     }
 }

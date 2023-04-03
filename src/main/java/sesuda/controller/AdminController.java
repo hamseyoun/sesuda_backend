@@ -1,5 +1,6 @@
 package sesuda.controller;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import sesuda.dto.AdminDTO;
+import sesuda.dto.MemberDTO;
 import sesuda.dto.MenuDTO;
 import sesuda.service.AdminService;
 import sesuda.util.Message;
@@ -25,10 +27,18 @@ public class AdminController {
     AdminService adminService;
 
     @PostMapping(value = "/orderList")
-    public ResponseEntity<Message> admin(@RequestBody AdminDTO dto) {
+    public ResponseEntity<Message> admin(@RequestBody String memberUid) {
         Message message = new Message();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        JSONObject jsonObject = new JSONObject(memberUid);
+        Object obj = jsonObject.get("memberUid");
+        memberUid = obj.toString();
+        int intMemberUid = Integer.parseInt(memberUid);
+
+        MemberDTO dto = adminService.adminCheck(intMemberUid);
+
         String result ="";
         List<AdminDTO> dtos = new ArrayList<>();
         if(dto.getAuth().equals("admin")) {

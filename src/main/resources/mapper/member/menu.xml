@@ -19,7 +19,7 @@
             ,order_state
         )
         values (
-            nextval('order_seq')
+            #{orderUid}
             ,#{memberUid}
             ,#{menuUid}
             ,#{addShot}
@@ -32,7 +32,8 @@
     </insert>
 
     <select id="sequence" resultType="int">
-        select max(order_uid) from orders
+        select COALESCE (max(order_uid), 1)
+        from orders;
     </select>
 
 

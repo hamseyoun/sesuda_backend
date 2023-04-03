@@ -8,6 +8,8 @@ import java.util.Date;
 @Data
 public class MemberDTO {
     //회원가입
+
+    private String memberUid;
     private String id;
     private String pw;
     private String nickName;
