@@ -14,7 +14,7 @@ create sequence member_seq;
 
 -- 멤버 예시 insert 문
 insert into member (
-	nid
+	member_uid
 	,id
 	,pw
 	,nickname
