@@ -112,5 +112,54 @@ public class MemberServiceImpl implements MemberService {
         }
         return memberDTO;
     }
+    // 세션키 생성
+    @Override
+    public String sessionKeySet(MemberDTO resultDTO) {
+        String result;
+            try{
+                int intResult = dao.sessionKeySet(resultDTO);
+                if (intResult==0) {
+                    result ="세션키 생성 실패";
+                }else{
+                    result ="세션키 생성";
+                }
+            }catch (Exception e) {
+                e.getStackTrace();
+                result ="DB오류";
+            }
+
+        return result;
+    }
+    // 세션키를 이용한 멤버 조회
+    @Override
+    public MemberDTO memberInformation(String sessionKey) {
+        MemberDTO dto = new MemberDTO();
+
+        try{
+            dto =dao.memberInformation(sessionKey);
+        }catch (Exception e){
+            e.getStackTrace();
+        }
+        return dto;
+
+    }
+
+    @Override
+    public String memberLogout(String sessionKey) {
+        int intResult;
+        String result;
+        try{
+            intResult= dao.memberLogout(sessionKey);
+            if (intResult==0) {
+                result ="로그아웃 실패";
+            }else{
+                result ="로그아웃 성공";
+            }
+        }catch (Exception e) {
+            e.getStackTrace();
+            result = "DB오류";
+        }
+        return result;
+    }
 
 }

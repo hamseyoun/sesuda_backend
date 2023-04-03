@@ -28,8 +28,7 @@ public class AdminServiceImpl implements AdminService {
     public String orderAccept(AdminDTO adminDTO) {
             String result;
         try{
-            int intResult = 1;
-                    adminDao.orderAccept(adminDTO);
+            int intResult = adminDao.orderAccept(adminDTO);
             if(intResult==0) {
                 result = "주문수락 실패";
             }else {
@@ -48,8 +47,7 @@ public class AdminServiceImpl implements AdminService {
     public String orderFinish(AdminDTO adminDTO) {
         String result;
         try{
-            int intResult = 1;
-            adminDao.orderAccept(adminDTO);
+            int intResult = adminDao.orderAccept(adminDTO);
             if(intResult==0) {
                 result = "주문완료 실패";
             }else {
@@ -68,8 +66,7 @@ public class AdminServiceImpl implements AdminService {
     public String orderCancel(AdminDTO adminDTO) {
         String result;
         try{
-            int intResult = 1;
-            adminDao.orderAccept(adminDTO);
+            int intResult = adminDao.orderAccept(adminDTO);
             if(intResult==0) {
                 result = "주문취소 실패";
             }else {

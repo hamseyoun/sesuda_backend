@@ -20,10 +20,9 @@ public class MenuDTO {
     // 옵션
     private int orderUid;
     private int addShot;
-    private int addMilk;
+    private boolean addMilk;
     private int addSyrup;
     private int selectBean;
-    private int count;
     private Timestamp orderDate;
 
     // 주문 상태

@@ -12,7 +12,6 @@
         ,o.add_milk
         ,o.add_syrup
         ,o.select_bean
-        ,o.count
         ,o.order_date
         ,o.order_state
         from menu m, orders o

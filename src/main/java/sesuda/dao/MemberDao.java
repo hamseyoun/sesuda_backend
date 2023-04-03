@@ -9,14 +9,20 @@ import java.util.List;
 
 @Mapper
 public interface MemberDao {
-    List<MemberDTO> memberList();
+    public List<MemberDTO> memberList();
 
     // 회원가입
-    int memberInsert(MemberDTO memberDTO);
+    public int memberInsert(MemberDTO memberDTO);
 
     // 아이디 중복 체크 및 로그인시 아이디 확인
-    int memberIdCheck(String id);
+    public int memberIdCheck(String id);
 
     //아이디 로그인
-    MemberDTO memberLogin(MemberDTO memberDTO);
+    public MemberDTO memberLogin(MemberDTO memberDTO);
+    // 세션키 생성
+    public int sessionKeySet(MemberDTO resultDTO);
+    // 세션키를 이용 한 멤버조회
+    public MemberDTO memberInformation(String sessionKey);
+    // 로그아웃
+    public int memberLogout(String sessionKey);
 }

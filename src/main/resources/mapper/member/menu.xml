@@ -15,7 +15,6 @@
             ,add_milk
             ,add_syrup
             ,select_bean
-            ,count
             ,order_date
             ,order_state
         )
@@ -27,7 +26,6 @@
             ,#{addMilk}
             ,#{addSyrup}
             ,#{selectBean}
-            ,#{count}
             ,now()
             ,1
         );
@@ -36,6 +34,7 @@
     <select id="sequence" resultType="int">
         select max(order_uid) from orders
     </select>
+
 
 
 </mapper>

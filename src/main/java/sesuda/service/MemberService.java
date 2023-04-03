@@ -20,4 +20,10 @@ public interface MemberService {
 
     // 로그인
     public MemberDTO memberLogin(MemberDTO memberDTO);
+    // 세션키저장
+    public String sessionKeySet(MemberDTO resultDTO);
+    //세션키를 이용한 회원정보조회
+    public MemberDTO memberInformation(String sessionKey);
+    // 로그아웃시 세션키 삭제
+    public String memberLogout(String sessionKey);
 }

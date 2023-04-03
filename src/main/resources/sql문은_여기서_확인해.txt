@@ -5,7 +5,8 @@ create table Member (
 	pw VARCHAR(200),
 	nickname VARCHAR(200),
 	auth VARCHAR(100),
-	joindate TIMESTAMP
+	joindate TIMESTAMP,
+	session_key varchar(200)
 	);
 
 -- 멤버 시퀀스 생성
@@ -79,18 +80,18 @@ values (
 
 -- 주문 테이블 생성
 create table orders (
-	order_Uid integer
-	,member_Uid varchar(100)
-	,menu_Uid integer
-	,add_Shot integer
- 	,add_Milk integer
-  	,add_Syrup integer
-  	,select_Bean integer
-	,count integer
-	,order_Date timestamp
+	order_uid integer
+	,member_uid varchar(100)
+	,menu_uid integer
+	,add_shot boolean
+ 	,add_milk boolean
+  	,add_syrup integer
+  	,select_bean integer
+	,order_date timestamp
 	,order_state integer
 	,FOREIGN KEY(menu_Uid) REFERENCES menu(menu_uid)
 	);
+
 
 -- 주문 시퀀스 생성
 create sequence order_seq;
@@ -115,5 +116,10 @@ alter table orders drop constraint orders_pkey;
 
 -- 주문 테이블 타입 수정
 alter table orders alter column member_uid type varchar(100);
+
+-- order테이블 count컬럼 삭제 및 add_milk boolean 타입적용
+
+-- 멤버 테이블 세션키 추가
+alter table member add column session_key varchar(200);
 
 

@@ -20,10 +20,7 @@ import sesuda.util.Message;
 
 import javax.validation.Valid;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/member")
@@ -116,7 +113,16 @@ public class memberController {
 
                 // 비밀번호 다시 null
                 resultDTO.setPw("null");
-                message.setData(resultDTO);
+                // 로그인시 세션키 생성
+                String uuid = UUID.randomUUID().toString();
+                // DTO의 세션키 세팅
+                resultDTO.setSessionKey(uuid);
+                // 세션키 생성
+                String sessionResult=memberService.sessionKeySet(resultDTO);
+                LOGGER.info("세션키생성완료");
+                //세션키가 있는 DTO로 다시 조회해서 받음
+                MemberDTO sessionResultDTO = memberService.memberLogin(memberDTO);
+                message.setData(sessionResultDTO);
                 result = "login success";
             }
             else{
@@ -128,6 +134,51 @@ public class memberController {
             result = "not-found-user";
         }
         message.setMessage(result);
+        return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
+
+    }
+
+    // 세션을 이용한 조회
+    @PostMapping(value = "/memberInformation")
+    public ResponseEntity memberInformation(HttpServletResponse response,@RequestBody String sessionKey){
+        Message message = new Message();
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        JSONObject jsonObject = new JSONObject(sessionKey);
+        Object obj = jsonObject.get("sessionKey");
+        sessionKey = obj.toString();
+        MemberDTO memberDTO = memberService.memberInformation(sessionKey);
+        String result="";
+        // 비밀번호는 널값 표시
+        memberDTO.setPw(null);
+        if(!memberDTO.getId().equals(null)){
+            result = "회원조회 성공";
+            message.setData(memberDTO);
+        }else{
+            result = "조회 실패";
+        }
+        message.setMessage(result);
+
+        return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
+
+    }
+
+    // 로그아웃시 세션키를 지워야함
+    @PostMapping(value = "/memberLogout")
+    public ResponseEntity memberLogout(HttpServletResponse response,@RequestBody String sessionKey){
+        Message message = new Message();
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+
+        JSONObject jsonObject = new JSONObject(sessionKey);
+        Object obj = jsonObject.get("sessionKey");
+        sessionKey = obj.toString();
+        String result="";
+        //로그아웃시 세션삭제
+        result = memberService.memberLogout(sessionKey);
+        message.setMessage(result);
+
         return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
 
     }

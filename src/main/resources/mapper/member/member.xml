@@ -25,6 +25,22 @@
         where id = #{id}
     </select>
 
+    <!-- 세션키 생성-->
+    <update id="sessionKeySet" parameterType="sesuda.dto.MemberDTO">
+        update member set session_key = #{sessionKey}
+        where id = #{id}
+    </update>
+    <!-- 세션키를 이용한 회원정보 조회 -->
+    <select id="memberInformation" parameterType="String" resultType="sesuda.dto.MemberDTO">
+        select * from member
+        where session_key = #{sessionKey}
+    </select>
+
+
+    <update id="memberLogout" parameterType="sesuda.dto.MemberDTO">
+        update member set session_key = 'null'
+        where session_key = #{sessionKey}
+    </update>
 
 
 </mapper>
