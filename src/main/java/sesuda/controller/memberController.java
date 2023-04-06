@@ -111,8 +111,6 @@ public class memberController {
             if(passwordEncoder.matches(memberDTO.getPw(),encodePw))  {
                 LOGGER.info("login success");
 
-                // 비밀번호 다시 null
-                resultDTO.setPw("null");
                 // 로그인시 세션키 생성
                 String uuid = UUID.randomUUID().toString();
                 // DTO의 세션키 세팅
@@ -122,6 +120,9 @@ public class memberController {
                 LOGGER.info("세션키생성완료");
                 //세션키가 있는 DTO로 다시 조회해서 받음
                 MemberDTO sessionResultDTO = memberService.memberLogin(memberDTO);
+                // 비밀번호는 상시 초기화로
+                sessionResultDTO.setPw(null);
+
                 message.setData(sessionResultDTO);
                 result = "login success";
             }
