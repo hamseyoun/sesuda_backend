@@ -14,7 +14,6 @@
             ,add_shot
             ,add_milk
             ,add_syrup
-            ,select_bean
             ,order_date
             ,order_state
             ,cup
@@ -26,7 +25,6 @@
             ,#{addShot}
             ,#{addMilk}
             ,#{addSyrup}
-            ,#{selectBean}
             ,now()
             ,1
             ,#{cup}

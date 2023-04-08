@@ -9,7 +9,7 @@ import java.util.Date;
 public class MemberDTO {
     //회원가입
 
-    private String memberUid;
+    private int memberUid;
     private String id;
     private String pw;
     private String nickName;

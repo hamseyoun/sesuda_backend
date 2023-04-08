@@ -23,7 +23,6 @@ public class AdminDTO {
     private boolean addShot;
     private boolean addMilk;
     private boolean addSyrup;
-    private int selectBean;
     private Timestamp orderDate;
 
     // 주문 상태

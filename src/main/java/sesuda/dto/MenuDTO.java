@@ -14,8 +14,10 @@ public class MenuDTO {
     private String menuPicture;
     private Timestamp menuUploadDate;
 
+    private int cup;
+
     // 주문자
-    private String memberUid;
+    private int memberUid;
 
 
     // 프론트단에서 쓰는 값 (서버에서는 안씀)
@@ -26,7 +28,6 @@ public class MenuDTO {
     private boolean addShot;
     private boolean addMilk;
     private boolean addSyrup;
-    private int selectBean;
     private Timestamp orderDate;
 
     // 주문 상태

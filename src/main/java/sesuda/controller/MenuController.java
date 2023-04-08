@@ -52,7 +52,8 @@ public class MenuController {
         //현재시간
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         // 아이디값 가져오기
-        String memberUid = orderSource.get(0).get("memberUid");
+        String temp = orderSource.get(0).get("memberUid");
+        int memberUid = Integer.parseInt(temp);
 
         List<Map<String,Object>> memuList = new ArrayList<>();
         Message message = new Message();
