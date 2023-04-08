@@ -17,6 +17,10 @@ public class MenuDTO {
     // 주문자
     private String memberUid;
 
+
+    // 프론트단에서 쓰는 값 (서버에서는 안씀)
+    private String frontOrderUid;
+
     // 옵션
     private int orderUid;
     private int addShot;

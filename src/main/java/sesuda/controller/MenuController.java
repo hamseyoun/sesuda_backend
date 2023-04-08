@@ -58,7 +58,9 @@ public class MenuController {
         Message message = new Message();
         for(int i=1; i<orderSource.toArray().length;i++) {
             ObjectMapper mapper = new ObjectMapper();
+            LOGGER.info("mapper에용 ",mapper);
             Map<String, String> response = orderSource.get(i);
+            LOGGER.info("response에용 ",response);
             MenuDTO dto=mapper.convertValue(response, MenuDTO.class);
             // 시퀀스 직접부여
             dto.setOrderUid(sequence+1);
