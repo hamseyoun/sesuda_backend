@@ -85,7 +85,7 @@ create table orders (
 	,menu_uid integer
 	,add_shot boolean
  	,add_milk boolean
-  	,add_syrup integer
+  	,add_syrup boolean
   	,select_bean integer
 	,order_date timestamp
 	,order_state integer

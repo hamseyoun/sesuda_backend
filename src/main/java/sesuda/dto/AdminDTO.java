@@ -16,11 +16,13 @@ public class AdminDTO {
 
     private String menuName;
 
+    private String frontOrderUid;
+
     // 옵션
     private int orderUid;
-    private int addShot;
+    private boolean addShot;
     private boolean addMilk;
-    private int addSyrup;
+    private boolean addSyrup;
     private int selectBean;
     private Timestamp orderDate;
 

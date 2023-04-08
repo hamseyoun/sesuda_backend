@@ -23,9 +23,9 @@ public class MenuDTO {
 
     // 옵션
     private int orderUid;
-    private int addShot;
+    private boolean addShot;
     private boolean addMilk;
-    private int addSyrup;
+    private boolean addSyrup;
     private int selectBean;
     private Timestamp orderDate;
 
