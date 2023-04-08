@@ -17,6 +17,7 @@
             ,select_bean
             ,order_date
             ,order_state
+            ,cup
         )
         values (
             #{orderUid}
@@ -28,6 +29,7 @@
             ,#{selectBean}
             ,now()
             ,1
+            ,#{cup}
         );
     </insert>
 
