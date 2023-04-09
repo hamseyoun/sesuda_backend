@@ -1,5 +1,6 @@
 package sesuda.service;
 
+import sesuda.dto.AdminDTO;
 import sesuda.dto.MemberDTO;
 
 
@@ -26,4 +27,7 @@ public interface MemberService {
     public MemberDTO memberInformation(String sessionKey);
     // 로그아웃시 세션키 삭제
     public String memberLogout(String sessionKey);
+
+    //내 주문 리스트 가져오기
+    public List<AdminDTO> myOrderList(String memberUid);
 }

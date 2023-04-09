@@ -210,20 +210,71 @@ public class memberController {
     }
 
 
-    @GetMapping(value = "/membertest1")
-    public ResponseEntity<Message> findById() {
+    @PostMapping(value = "/myOrderList")
+    public ResponseEntity myOrderList(HttpServletResponse response,@RequestBody String sessionKey){
         Message message = new Message();
         HttpHeaders headers= new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
-        List<MemberDTO> dto = new ArrayList<>();
-        dto = memberService.memberList();
+        JSONObject jsonObject = new JSONObject(sessionKey);
+        Object obj = jsonObject.get("sessionKey");
+        sessionKey = obj.toString();
+        MemberDTO memberDTO = memberService.memberInformation(sessionKey);
+        String result="";
 
-        message.setMessage("굿나잇");
-        message.setData(dto);
+        Set<Integer> orderUidsSet = new LinkedHashSet<>();
+        List<Integer> orderUidsList = new ArrayList<>();
+        List<Map<String, Object>> finalList = new ArrayList<>();
+
+        String memberUid = String.valueOf(memberDTO.getMemberUid());
+        List<AdminDTO> dtos = memberService.myOrderList(memberUid);
+
+        for (int i = 0; i < dtos.size(); i++) {
+            orderUidsSet.add(dtos.get(i).getOrderUid());
+        }
+        System.out.println("orderUidsSet = " + orderUidsSet);
+
+        Iterator<Integer> orderUidsIter = orderUidsSet.iterator();
+        while (orderUidsIter.hasNext()) {
+            orderUidsList.add(orderUidsIter.next());
+        }
+
+        System.out.println("orderUidsList = " + orderUidsList);
+
+        for (int i = 0; i < orderUidsList.size(); i++) {
+            List<AdminDTO> dtosList = new ArrayList<>();
+            for (int j = 0; j < dtos.size(); j++) {
+                int orderUid_i = orderUidsList.get(i);
+                int orderUid_j = dtos.get(j).getOrderUid();
+
+                if( orderUid_i == orderUid_j ){
+                    dtosList.add(dtos.get(j));
+                }
+            }
+            Map<String, Object> dtosMap = new HashMap<>();
+            dtosMap.put("orderUid", orderUidsList.get(i));
+            dtosMap.put("orderList", dtosList);
+            finalList.add(dtosMap);
+        }
+
+        System.out.println("finalList = " + finalList);
+
+        // 비밀번호는 널값 표시
+        memberDTO.setPw(null);
+        if(!memberDTO.getId().equals(null)){
+
+            result = "회원조회 성공";
+            message.setData(finalList);
+        }else{
+            result = "조회 실패";
+        }
+        message.setMessage(result);
 
         return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
+
     }
+
+
 
 
 }

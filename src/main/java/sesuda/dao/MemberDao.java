@@ -2,6 +2,7 @@ package sesuda.dao;
 
 
 import org.apache.ibatis.annotations.Mapper;
+import sesuda.dto.AdminDTO;
 import sesuda.dto.MemberDTO;
 
 import java.util.List;
@@ -25,4 +26,7 @@ public interface MemberDao {
     public MemberDTO memberInformation(String sessionKey);
     // 로그아웃
     public int memberLogout(String sessionKey);
+
+    //내 주문 리스트 가져오기
+    public List<AdminDTO> myOrderList(String memberUid);
 }

@@ -42,5 +42,9 @@
         where session_key = #{sessionKey}
     </update>
 
+    <select id="myOrderList" parameterType="string" resultType="sesuda.dto.AdminDTO">
+        select * from orders where member_uid = #{memberUid}
+    </select>
+
 
 </mapper>

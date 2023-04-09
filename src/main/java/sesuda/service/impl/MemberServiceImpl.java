@@ -4,6 +4,7 @@ import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sesuda.dao.MemberDao;
+import sesuda.dto.AdminDTO;
 import sesuda.dto.MemberDTO;
 import sesuda.service.MemberService;
 import sesuda.util.Message;
@@ -160,6 +161,11 @@ public class MemberServiceImpl implements MemberService {
             result = "DB오류";
         }
         return result;
+    }
+
+    @Override
+    public List<AdminDTO> myOrderList(String memberUid) {
+        return new ArrayList<>(dao.myOrderList(memberUid));
     }
 
 }
