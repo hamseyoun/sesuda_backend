@@ -37,6 +37,7 @@ public class MenuController {
         List<MenuDTO> dtos = new ArrayList<>();
         dtos = (service.menuList());
 
+
         message.setMessage("success");
         message.setData(dtos);
 
@@ -48,7 +49,7 @@ public class MenuController {
         LOGGER.info("주문진입");
         // 시퀀스용도
         int sequence = service.sequence();
-
+        System.out.println("orderSource = " + orderSource);
         //현재시간
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         // 아이디값 가져오기
@@ -57,11 +58,11 @@ public class MenuController {
 
         List<Map<String,Object>> memuList = new ArrayList<>();
         Message message = new Message();
-        for(int i=1; i<orderSource.toArray().length;i++) {
+        for(int i=2; i<orderSource.toArray().length;i++) {
             ObjectMapper mapper = new ObjectMapper();
-            LOGGER.info("mapper에용 ",mapper);
+
             Map<String, String> response = orderSource.get(i);
-            LOGGER.info("response에용 ",response);
+
             MenuDTO dto=mapper.convertValue(response, MenuDTO.class);
             // 시퀀스 직접부여
             dto.setOrderUid(sequence+1);

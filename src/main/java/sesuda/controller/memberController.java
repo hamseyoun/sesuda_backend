@@ -109,6 +109,24 @@ public class memberController {
             String encodePw = resultDTO.getPw();
             // 아이디,패스워드 일치시
             if(passwordEncoder.matches(memberDTO.getPw(),encodePw))  {
+                if(resultDTO.getAuth().equals("admin")) {
+                    LOGGER.info("admin login");
+                    // 로그인시 세션키 생성
+                    String uuid = UUID.randomUUID().toString();
+                    // DTO의 세션키 세팅
+                    resultDTO.setSessionKey(uuid);
+                    // 세션키 생성
+                    String sessionResult=memberService.sessionKeySet(resultDTO);
+                    LOGGER.info("세션키생성완료");
+                    //세션키가 있는 DTO로 다시 조회해서 받음
+                    MemberDTO sessionResultDTO = memberService.memberLogin(memberDTO);
+                    // 비밀번호는 상시 초기화로
+                    sessionResultDTO.setPw(null);
+                    message.setData(sessionResultDTO);
+                    message.setMessage("admin login");
+                    return new ResponseEntity<Message>(message, headers, HttpStatus.OK);
+                } else{
+
                 LOGGER.info("login success");
 
                 // 로그인시 세션키 생성
@@ -125,6 +143,7 @@ public class memberController {
 
                 message.setData(sessionResultDTO);
                 result = "login success";
+                }
             }
             else{
                 LOGGER.info("패스워드불일치");
@@ -154,6 +173,11 @@ public class memberController {
         // 비밀번호는 널값 표시
         memberDTO.setPw(null);
         if(!memberDTO.getId().equals(null)){
+
+            //JSONObject obj1 = new JSONObject();
+            //obj1.put("asd","asd");
+            //HashMap<String,String> map = new HashMap<>();
+            //map.put("asd","asd");
             result = "회원조회 성공";
             message.setData(memberDTO);
         }else{
@@ -168,6 +192,7 @@ public class memberController {
     // 로그아웃시 세션키를 지워야함
     @PostMapping(value = "/memberLogout")
     public ResponseEntity memberLogout(HttpServletResponse response,@RequestBody String sessionKey){
+        LOGGER.info("로그아웃");
         Message message = new Message();
         HttpHeaders headers= new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));

@@ -11,7 +11,6 @@
         ,o.add_shot
         ,o.add_milk
         ,o.add_syrup
-        ,o.select_bean
         ,o.order_date
         ,o.order_state
         ,o.cup
@@ -30,14 +29,14 @@
     <!-- 주문완료상태-->
     <update id="orderFinish" parameterType="sesuda.dto.AdminDTO" >
         update orders
-        set order_sate = 3
+        set order_state = 3
         where order_uid = #{orderUid}
     </update>
 
     <!-- 주문취소 -->
     <update id="orderCancel" parameterType="sesuda.dto.AdminDTO" >
         update orders
-        set order_sate = 4
+        set order_state = 4
         where order_uid = #{orderUid}
     </update>
 

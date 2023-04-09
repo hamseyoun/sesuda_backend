@@ -43,6 +43,11 @@ public class AdminController {
         List<AdminDTO> dtos = new ArrayList<>();
         if(dto.getAuth().equals("admin")) {
             dtos = adminService.orderList();
+            System.out.println("dtos.size() = " + dtos.size());
+            System.out.println("asd " + dtos.get(0));
+
+
+            System.out.println("dtos = " + dtos);
             result ="Welcome Admin";
         }
         else{

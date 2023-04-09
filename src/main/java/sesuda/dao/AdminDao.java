@@ -19,7 +19,7 @@ public interface AdminDao {
     public int orderFinish(AdminDTO adminDTO);
 
     // 주문삭제
-    public int orderDelete(AdminDTO adminDTO);
+    public int orderCancel(AdminDTO adminDTO);
     // 관리자 체크용도
     public MemberDTO adminChecK(int memberUid);
 }
