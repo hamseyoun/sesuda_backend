@@ -15,8 +15,7 @@ import sesuda.service.AdminService;
 import sesuda.util.Message;
 import javax.validation.Valid;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @RequestMapping("/admin")
@@ -41,13 +40,43 @@ public class AdminController {
 
         String result ="";
         List<AdminDTO> dtos = new ArrayList<>();
+        Set<Integer> orderUidsSet = new LinkedHashSet<>();
+        List<Integer> orderUidsList = new ArrayList<>();
+        List<Map<String, Object>> finalList = new ArrayList<>();
+
         if(dto.getAuth().equals("admin")) {
             dtos = adminService.orderList();
-            System.out.println("dtos.size() = " + dtos.size());
-            System.out.println("asd " + dtos.get(0));
+
+            for (int i = 0; i < dtos.size(); i++) {
+                orderUidsSet.add(dtos.get(i).getOrderUid());
+            }
+
+            Iterator<Integer> orderUidsIter = orderUidsSet.iterator();
+            while (orderUidsIter.hasNext()) {
+                orderUidsList.add(orderUidsIter.next());
+            }
+
+            System.out.println("orderUidsList = " + orderUidsList);
 
 
-            System.out.println("dtos = " + dtos);
+            for (int i = 0; i < orderUidsList.size(); i++) {
+                List<AdminDTO> dtosList = new ArrayList<>();
+                for (int j = 0; j < dtos.size(); j++) {
+                    int orderUid_i = orderUidsList.get(i);
+                    int orderUid_j = dtos.get(j).getOrderUid();
+
+                    if( orderUid_i == orderUid_j ){
+                        dtosList.add(dtos.get(j));
+                    }
+                }
+                Map<String, Object> dtosMap = new HashMap<>();
+                dtosMap.put("orderUid", orderUidsList.get(i));
+                dtosMap.put("orderList", dtosList);
+                finalList.add(dtosMap);
+            }
+
+            System.out.println("finalList = " + finalList);
+
             result ="Welcome Admin";
         }
         else{
@@ -55,7 +84,7 @@ public class AdminController {
         }
 
         message.setMessage(result);
-        message.setData(dtos);
+        message.setData(finalList);
 
         return new ResponseEntity<>(message, headers, HttpStatusCode.valueOf(200));
 

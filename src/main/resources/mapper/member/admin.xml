@@ -7,6 +7,7 @@
     <select id="orderList" resultType="sesuda.dto.AdminDTO">
         select
         o.order_uid
+        ,o.member_uid
         ,m.menu_name
         ,o.add_shot
         ,o.add_milk
