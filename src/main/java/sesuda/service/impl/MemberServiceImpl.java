@@ -18,6 +18,8 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberDao dao;
 
+
+
     // 멤버리스트
     @Override
     public List<MemberDTO> memberList() {
@@ -166,6 +168,24 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<AdminDTO> myOrderList(String memberUid) {
         return new ArrayList<>(dao.myOrderList(memberUid));
+    }
+
+    @Override
+    public String orderCancel(AdminDTO adminDTO) {
+        String result;
+        try{
+            int intResult = dao.orderCancel(adminDTO);
+            if(intResult==0) {
+                result = "주문취소 실패";
+            }else {
+                result= "주문취소";
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            result = "DB오류";
+        }
+        return  result;
     }
 
 }

@@ -47,4 +47,12 @@
     </select>
 
 
+    <!-- 주문취소 -->
+    <update id="orderCancel" parameterType="sesuda.dto.AdminDTO" >
+        update orders
+        set order_state = 4
+        where order_uid = #{orderUid} and member_uid = #{memberUid}
+    </update>
+
+
 </mapper>

@@ -81,7 +81,7 @@ values (
 -- 주문 테이블 생성
 create table orders (
 	order_uid integer
-	,member_uid varchar(100)
+	,member_uid integer
 	,menu_uid integer
 	,add_shot boolean
  	,add_milk boolean

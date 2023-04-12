@@ -30,4 +30,7 @@ public interface MemberService {
 
     //내 주문 리스트 가져오기
     public List<AdminDTO> myOrderList(String memberUid);
+
+    // 내 주문 취소하기
+    public String orderCancel(AdminDTO adminDTO);
 }

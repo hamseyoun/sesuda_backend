@@ -29,4 +29,7 @@ public interface MemberDao {
 
     //내 주문 리스트 가져오기
     public List<AdminDTO> myOrderList(String memberUid);
+
+    // 주문취소
+    public int orderCancel(AdminDTO adminDTO);
 }
